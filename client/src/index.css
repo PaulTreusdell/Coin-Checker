@@ -1,0 +1,122 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app {
+  height: 100%;
+  width: 100%;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url(/background.jpg);
+  background-size: cover;
+}
+
+.login-form {
+  padding: 5%;
+  overflow: auto;
+  border-radius: 25%;
+  background-color: rgba(255, 255, 255, .1);
+  border-style: groove;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-title {
+  display: flex;
+  justify-content: center;
+  font-style:oblique;
+  color: lightseagreen;
+  font-weight: bolder;
+}
+
+.user-input, .email-input, .password-input {
+  padding: 5px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid aquamarine;
+}
+
+.submit-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.submit {
+  padding: 8px;
+  background-color: gainsboro;
+  width: 50%;
+}
+
+.submit:hover {
+  background-color: gray;
+  color: black;
+  cursor: pointer;
+}
+
+.header, .footer {
+  background-color: aliceblue;
+}
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid black;
+  padding: .5rem;
+}
+
+.footer {
+  border-top: 2px solid black;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+main {
+  flex: 1;
+}
+
+.collection-message {
+  display: flex;
+  justify-content: center;
+}
+
+.checker-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coin-grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 1rem;
+}
+
+.coin-div {
+  border: 2px solid black;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+#check {
+  color: red;
+  cursor: pointer;
+}

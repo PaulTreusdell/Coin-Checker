@@ -1,11 +1,10 @@
 import User from "../models/User.js";
 import Coin from "../models/Coin.js";
 import { getCoinData } from "../utils/openai.js";
-import path from "path";
 
 export const createCoin = async (req, res) => {
   try {
-    console.log(req.file);
+
     const user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).json({message: "User not found"});

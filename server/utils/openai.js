@@ -1,21 +1,19 @@
 import { OpenAI } from "openai";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from 'url';
+import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { s3 } from "./s3.js"
 
 export async function getCoinData(file) {
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
 
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
+  const command = new GetObjectCommand({
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: file.key, 
+  });
 
-  const imgPath = path.join(__dirname, '..','assets', `${file.originalname}`)
-
-  const base64Image = fs.readFileSync(imgPath, {
-    encoding: "base64"
-  })
+  const signedUrl = await getSignedUrl(s3, command, { expiresIn: 300 });
 
   const prompt = `You are a coin expert. Your job is to estimate a collectible coin's value from an image.
   Respond in the following format and ONLY this format:
@@ -27,28 +25,19 @@ export async function getCoinData(file) {
   Do not add anything else before or after the answer.
   Keep the explanation under 100 words.`;
 
-  const response = await openai.chat.completions.create({
+  const completion = await openai.chat.completions.create({
     model: "gpt-4o",
     messages: [
       {
         role: "user",
         content: [
-          {
-            type: "text",
-            text: prompt
-          },
-          {
-            type: "image_url",
-            image_url: {
-              url: `data:${file.mimetype};base64,${base64Image}`,
-            }
-          }
-        ]
-      }
+          { type: "text", text: prompt },
+          { type: "image_url", image_url: { url: signedUrl } },
+        ],
+      },
     ],
     max_tokens: 1000,
-  })
-  console.log(response.choices[0]);
-  const coinInfo = response.choices[0].message.content; //gets response
+  });
+  const coinInfo = completion.choices[0].message.content; //gets response
   return coinInfo.split("*");
 }

@@ -34,7 +34,7 @@ export default function HomePage() {
       <div className="coin-grid">
         {user && user.coins.length > 0 ? (
           user.coins.map((coin)=>(
-            <div className="coin-div">
+            <div className="coin-div" key={coin._id}>
               <h4>{coin.name}</h4>
               <p>{coin.price}</p>
               <p>{coin.description}</p>

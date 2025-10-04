@@ -36,7 +36,7 @@ export const handleRegister = async (req,res) => {
   const { username, email, password } = req.body;
   try {
     //Check if user already in DB
-    const user = await User.find({email});
+    const user = await User.findOne({email});
     if (user) {
       return res.status(409).json({error: "User Already Registered"});
     }

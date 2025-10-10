@@ -2,6 +2,8 @@ import { OpenAI } from "openai";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { s3 } from "./s3.js"
+import dotenv from 'dotenv';
+dotenv.config();
 
 export async function getCoinData(file) {
   const openai = new OpenAI({
